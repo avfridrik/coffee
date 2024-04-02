@@ -6,7 +6,7 @@ import { SocketService } from "src/socket/socket.service";
 //@Inject(forwardRef(() => SocketGateway)) private readonly socketGateway: SocketGateway
 @Injectable()
 export class SerialService {
-  portName = "/dev/tty.usbmodem01";
+  portName = process.env.PORT;
   port;
   constructor(
     @Inject(forwardRef(() => SocketGateway))
