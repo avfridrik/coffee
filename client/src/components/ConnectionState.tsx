@@ -18,7 +18,7 @@ export function ConnectionState(props: ConnectionStateProps) {
 
   switch (props.state) {
     case "OFFLINE":
-      badges.vmc = "badge-secondary";
+      badges.vmc = "badge-error";
       break;
     case "ERROR":
       badges.vmc = "badge-error";

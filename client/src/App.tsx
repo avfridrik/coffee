@@ -6,8 +6,10 @@ import { Events } from "./components/Events";
 import { MyForm } from "./components/MyForm";
 import Products from "./components/Products.js";
 import { ConnectionModal } from "./components/Modals/Connection.js";
-import { WaitPaymentModal } from "./components/Modals/WhaitPayment.js";
-import { WaitDispenseModal } from "./components/Modals/WhaitDispense.js";
+import { WaitPaymentModal } from "./components/Modals/WaitPayment.js";
+import { WaitDispenseModal } from "./components/Modals/WaitDispense.js";
+import { SuccessModal } from "./components/Modals/Success.js";
+import { ErrorModal } from "./components/Modals/Error.js";
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -15,6 +17,8 @@ export default function App() {
   const [remoteState, setRemoteState] = useState<string>("OFFLINE");
   const [isWaitPayment, setWaitPayment] = useState<boolean>(false);
   const [isWaitDispense, setWaitDispense] = useState<boolean>(false);
+  const [showSuccessWindow, setSuccessWindow] = useState<boolean>(false);
+  const [showErrorWindow, setErrorWindow] = useState<boolean>(false);
 
   useEffect(() => {
     function onConnect() {
@@ -49,7 +53,13 @@ export default function App() {
         } else if (commands[1] === "VEND") {
           if (commands[2] === "SUCCESS") {
             setWaitDispense(false);
-          } else setWaitDispense(false);
+            setSuccessWindow(true);
+            setTimeout(() => setSuccessWindow(false), 5000);
+          } else {
+            setWaitDispense(false);
+            setErrorWindow(true);
+            setTimeout(() => setErrorWindow(false), 5000);
+          }
         } else if (commands[1] === "ERR") {
           if (commands[2].includes("cashless is on")) {
             setRemoteState("ENABLED");
@@ -73,6 +83,8 @@ export default function App() {
   return (
     <div className="App">
       <ConnectionModal open={isConnected} />
+      <ErrorModal open={showErrorWindow} />
+      <SuccessModal open={showSuccessWindow} />
       <WaitDispenseModal open={isWaitDispense} />
       <WaitPaymentModal open={isWaitPayment} />
       <ConnectionState isConnected={isConnected} state={remoteState} />

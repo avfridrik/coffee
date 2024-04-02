@@ -4,7 +4,6 @@ type ModalProps = {
 };
 
 export function WaitPaymentModal(props: ModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
   return (
     <dialog
       id="WaitPaymentModal"
