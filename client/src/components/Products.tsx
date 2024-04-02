@@ -9,7 +9,11 @@ export type Product = {
   image?: string;
 };
 
-export default function Products() {
+type ProductsProps = {
+  setPayment: (wait: boolean) => void;
+};
+
+export default function Products(props: ProductsProps) {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [product, setProduct] = React.useState<Product>();
   React.useEffect(() => {
@@ -24,14 +28,12 @@ export default function Products() {
 
   const showModal = (product: Product) => {
     setProduct(product);
-    (
-      document.getElementById("dispense-modal") as HTMLDialogElement
-    ).showModal();
+    (document.getElementById("DispenseModal") as HTMLDialogElement).showModal();
   };
 
   return (
     <main className="min-h-screen m-10">
-      <DispenseModal item={product} />
+      <DispenseModal item={product} setPayment={props.setPayment} />
       <div className="from-yellow-400 to-yellow-700 bg-clip-text text-transparent bg-gradient-to-r text-8xl text-center font-extrabold mb-10">
         Choose your drink
       </div>

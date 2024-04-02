@@ -19,7 +19,7 @@ export function ConnectionModal(props: ModalProps) {
   }
   return (
     <dialog
-      id="connection-modal"
+      id="ConnectionModal"
       className="modal modal-bottom sm:modal-middle"
       open={!props.open}
     >
